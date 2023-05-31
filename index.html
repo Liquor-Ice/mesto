@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,77 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <header class="header">
+
+  </header>
+  <main class="content">
+    <div class="profile">
+      <img src="./images/portrait.jpg" alt="аватарка" class="profile__avatar">
+      <div class="profile__info">
+        <p class="profile__name">Северин Бакле</p>
+        <p class="profile__job">Картограф виртуальных миров, концепт-художник</p>
+        <button class="profile__edit"></button>
+      </div>
+      <button class="profile__add-button"></button>
+    </div>
+    <div class="elements">
+      <div class="card">
+        <img src="./images/BIONICLE#08.jpg" alt="Карта Воя Нуи" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Воя Нуи</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./images/BIONICLE#03.jpg" alt="Карта озера" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Озеро протодермиса</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./images/BIONICLE#05.jpg" alt="Карта крепости" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Лавовый резервуар</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./images/BIONICLE#18.jpg" alt="Вход в подземелье" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Хранилище Вируса</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./images/BIONICLE#07.jpg" alt="Озеро лавы" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Храм маски Жизни</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./images/BIONICLE#17.jpg" alt="Внутри хранилища" class="card__image">
+        <div class="card__description">
+          <p class="card__title">Алтарь маски Жизни</p>
+          <button class="card__like"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <p class="footer__text" lang="En">&copy; 2023 Mesto Russia</p>
+  </footer>
+  <section class="popup">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form action="" class="popup__form">
+        <input class="popup__name-input" type="text">
+        <input class="popup__job-input" type="text">
+        <button class="popup__button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </section>
+  <script src="./pages/index.js"></script>
 </body>
 </html>
