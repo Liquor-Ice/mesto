@@ -1,5 +1,5 @@
 .profile {
-  margin-bottom: 50px;
+  margin-bottom: clamp(36px, 11vw, 50px);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
