@@ -2,4 +2,5 @@
   color: #545454;
   font-size: clamp(14px, 4vw, 18px);
   line-height: 1.22;
+  margin-top: clamp(48px, 15vw, 66px);
 }

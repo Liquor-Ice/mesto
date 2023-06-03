@@ -3,5 +3,11 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 30px;
+  column-gap: 30px;
+}
+
+@media (max-width: 665px) {
+  .profile {
+    flex-direction: column;
+  }
 }

@@ -1,4 +1,7 @@
 .profile__edit {
+  position: absolute;
+  right: 0;
+  top: 15px;
   width: 24px;
   aspect-ratio: 1 / 1;
   padding: 0;
@@ -12,4 +15,12 @@
 
 .profile__edit:hover {
   opacity: .6;
+}
+
+@media (max-width: 665px) {
+  .profile__edit {
+    right: 19px;
+    top: 8px;
+    width: 18px;
+  }
 }

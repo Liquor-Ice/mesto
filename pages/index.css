@@ -2,6 +2,7 @@
 @import url('../vendor/fonts.css');
 @import url('../blocks/page/page.css');
 @import url('../blocks/page/__container/page__container.css');
+@import url('../blocks/page/__overflow/page__overflow.css');
 @import url('../blocks/header/header.css');
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');

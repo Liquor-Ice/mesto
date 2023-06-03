@@ -3,5 +3,4 @@
   row-gap: 20px;
   column-gap: 17px;
   grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  margin-bottom: clamp(48px, 15vw, 66px);
 }
