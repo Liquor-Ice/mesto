@@ -12,76 +12,76 @@
 
   </header>
   <main class="content page__container">
-    <div class="profile">
+    <section class="profile">
       <img src="./images/portrait.jpg" alt="аватарка" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__container">
-          <p class="profile__name page__overflow">Северин Бакле</p>
-          <button class="profile__edit page__button" type="button"></button>
+          <h1 class="profile__name page__overflow">Северин Бакле</h1>
+          <button class="profile__edit page__button" type="button" aria-label="редактировать профиль"></button>
         </div>
         <p class="profile__job page__overflow">Картограф виртуальных миров, концепт-художник</p>
       </div>
-      <button class="profile__add-button page__button" type="button"></button>
-    </div>
-    <div class="elements">
-      <div class="card">
-        <img src="./images/BIONICLE08.jpg" alt="Карта Воя Нуи" class="card__image">
+      <button class="profile__add-button page__button" type="button" aria-label="добавить место"></button>
+    </section>
+    <section class="elements" aria-label="Места">
+      <article class="card">
+        <img src="./images/BIONICLE08.jpg" alt="Карта острова" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Воя Нуи</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Воя Нуи</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-      <div class="card">
-        <img src="./images/BIONICLE03.jpg" alt="Карта озера" class="card__image">
+      </article>
+      <article class="card">
+        <img src="./images/BIONICLE03.jpg" alt="Карта локации с озером" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Озеро протодермиса</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Озеро протодермиса</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-      <div class="card">
-        <img src="./images/BIONICLE05.jpg" alt="Карта крепости" class="card__image">
+      </article>
+      <article class="card">
+        <img src="./images/BIONICLE05.jpg" alt="Плотина на лавовой реке" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Лавовый резервуар</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Лавовый резервуар</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-      <div class="card">
-        <img src="./images/BIONICLE18.jpg" alt="Вход в подземелье" class="card__image">
+      </article>
+      <article class="card">
+        <img src="./images/BIONICLE18.jpg" alt="Лифт в подземное логово" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Хранилище Вируса</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Хранилище Вируса</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-      <div class="card">
-        <img src="./images/BIONICLE07.jpg" alt="Озеро лавы" class="card__image">
+      </article>
+      <article class="card">
+        <img src="./images/BIONICLE07.jpg" alt="Жерло вулкана со входом в хранилище" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Храм маски Жизни</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Храм маски Жизни</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-      <div class="card">
-        <img src="./images/BIONICLE17.jpg" alt="Внутри хранилища" class="card__image">
+      </article>
+      <article class="card">
+        <img src="./images/BIONICLE17.jpg" alt="Интерьер хранилища" class="card__image">
         <div class="card__description">
-          <p class="card__title page__overflow">Алтарь маски Жизни</p>
-          <button class="card__like page__button" type="button"></button>
+          <h2 class="card__title page__overflow">Алтарь маски Жизни</h2>
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   </main>
   <footer class="footer page__container">
     <p class="footer__text" lang="En">&copy; 2023 Mesto Russia</p>
   </footer>
-  <section class="popup" aria-label="Попап">
-    <article class="popup__container">
-      <button class="popup__close page__button" type="button"></button>
+  <div class="popup" aria-label="Попап">
+    <div class="popup__container">
+      <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form action="#" class="popup__form">
-        <input class="popup__input popup__input_type_name" type="text">
-        <input class="popup__input popup__input_type_job" type="text">
-        <button class="popup__button page__button" type="submit">Сохранить</button>
+      <form action="#" class="popup__form" name="personalia" method="post" onsubmit="return false;">
+        <input class="popup__input popup__input_type_name" name="personalia_name" placeholder="Имя" type="text">
+        <input class="popup__input popup__input_type_job" name="personalia_job" placeholder="О себе" type="text">
+        <button class="popup__button page__button" type="submit" aria-label="сохранить изменения">Сохранить</button>
       </form>
-    </article>
-  </section>
-  <script src="./pages/index.js"></script>
+    </div>
+  </div>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>
