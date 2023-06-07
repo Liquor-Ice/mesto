@@ -7,3 +7,9 @@
   background-repeat: no-repeat;
   background-size: clamp(104px, 32.5vw, 142px);
 }
+
+@media (max-width: 907px) {
+  .header {
+    background-position: 27px top;
+  }
+}

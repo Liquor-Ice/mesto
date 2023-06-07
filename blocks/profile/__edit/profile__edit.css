@@ -10,12 +10,6 @@
   background-image: url('../../../images/Edit.png');
   background-repeat: no-repeat;
   background-position: center;
-  transition: opacity .5s;
-  cursor: pointer;
-}
-
-.profile__edit:hover {
-  opacity: .6;
 }
 
 @media (max-width: 665px) {
