@@ -1,4 +1,6 @@
 const profile = document.querySelector('.profile');
+const placesElement = document.querySelector('.elements');
+const templateElement = document.querySelector('#card-template').content.querySelector('.card');
 
 const popupProf = document.querySelector('.popup_type_profile');
 const closePP = popupProf.querySelector('.popup__close');
@@ -14,8 +16,10 @@ const addButton = profile.querySelector('.profile__add-button');
 const placeInput = popupCard.querySelector('.popup__input_type_place');
 const linkInput = popupCard.querySelector('.popup__input_type_link');
 
-const placesElement = document.querySelector('.elements');
-const templateElement = document.querySelector('#card-template').content.querySelector('.card');
+const popupImg = document.querySelector('.popup_type_image');
+const closePI = popupImg.querySelector('.popup__close');
+const bigImage = popupImg.querySelector('.popup__image');
+const imageSubt = popupImg.querySelector('.popup__subtitle');
 
 const initialCards = [
   {
@@ -55,14 +59,20 @@ function createCard(data) {
   const likeButton = cardElement.querySelector('.card__like');
   const deleteButton = cardElement.querySelector('.card__delete');
 
+  titleElement.textContent = data.name;
+  imageElement.src = data.link;
+
   likeButton.addEventListener('click', () => {
     toggleThis(likeButton, 'card__like_liked');
   });
   deleteButton.addEventListener('click', () => {
     cardElement.remove();
   });
-  titleElement.textContent = data.name;
-  imageElement.src = data.link;
+  imageElement.addEventListener('click', () => {
+    imageSubt.textContent = data.name;
+    bigImage.src = data.link;
+    toggleThis(popupImg, 'popup_opened')
+  })
 
   placesElement.prepend(cardElement);
 }
@@ -104,3 +114,9 @@ popupCard.addEventListener('submit', (e) => {
 initialCards.forEach((item)  => {
   createCard(item);
 })
+
+closePI.addEventListener('click', () => {
+  bigImage.src = '';
+  imageSubt.textContent = '';
+  toggleThis(popupImg, 'popup_opened');
+});
