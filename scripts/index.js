@@ -44,8 +44,8 @@ const initialCards = [
   }
 ];
 
-function togglePopup(popup) {
-  popup.classList.toggle('popup_opened');
+function toggleThis(cont, clas) {
+  cont.classList.toggle(clas);
 }
 
 function createCard(data) {
@@ -55,7 +55,7 @@ function createCard(data) {
   const likeButton = cardElement.querySelector('.card__like');
 
   cardElement.addEventListener('click', () => {
-    likeButton.classList.toggle('card__like_liked');
+    toggleThis(likeButton, 'card__like_liked');
   });
   titleElement.textContent = data.name;
   imageElement.src = data.link;
@@ -66,33 +66,33 @@ function createCard(data) {
 editButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  togglePopup(popupProf);
+  toggleThis(popupProf, 'popup_opened');
 });
 
 closePP.addEventListener('click', () => {
-  togglePopup(popupProf);
+  toggleThis(popupProf, 'popup_opened');
 });
 
 popupProf.addEventListener('submit', (e) => {
   e.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  togglePopup(popupProf);
+  toggleThis(popupProf, 'popup_opened');
 });
 
 addButton.addEventListener('click', () => {
-  togglePopup(popupCard);
+  toggleThis(popupCard, 'popup_opened');
 });
 
 closePC.addEventListener('click', () => {
-  togglePopup(popupCard);
+  toggleThis(popupCard, 'popup_opened');
 });
 
 popupCard.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = {name: `${placeInput.value}`, link: `${linkInput.value}`};
   createCard(data);
-  togglePopup(popupCard);
+  toggleThis(popupCard, 'popup_opened');
   placeInput.value = '';
   linkInput.value = '';
 })
