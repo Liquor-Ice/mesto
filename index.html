@@ -31,7 +31,7 @@
     <p class="footer__text" lang="En">&copy; 2023 Mesto Russia</p>
   </footer>
   
-  <div class="popup" aria-label="Попап">
+  <div class="popup popup_type_profile" aria-label="Попап">
     <div class="popup__container">
       <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
@@ -39,6 +39,18 @@
         <input class="popup__input popup__input_type_name" name="personalia_name" placeholder="Имя" type="text">
         <input class="popup__input popup__input_type_job" name="personalia_job" placeholder="О себе" type="text">
         <button class="popup__button page__button" type="submit" aria-label="сохранить изменения">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_card" aria-label="Попап">
+    <div class="popup__container">
+      <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form action="#" class="popup__form" name="personalia" method="post">
+        <input class="popup__input popup__input_type_place" name="card_name" placeholder="Название" type="text">
+        <input class="popup__input popup__input_type_link" name="card_link" placeholder="Ссылка на картинку" type="text">
+        <button class="popup__button page__button" type="submit" aria-label="создать карточку">Создать</button>
       </form>
     </div>
   </div>
