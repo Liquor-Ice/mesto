@@ -15,13 +15,14 @@ const closePC = popupCard.querySelector('.popup__close');
 const addButton = profile.querySelector('.profile__add-button');
 const placeInput = popupCard.querySelector('.popup__input_type_place');
 const linkInput = popupCard.querySelector('.popup__input_type_link');
+const cardForm = popupCard.querySelector('.popup__form');
 
 const popupImg = document.querySelector('.popup_type_image');
 const closePI = popupImg.querySelector('.popup__close');
 const bigImage = popupImg.querySelector('.popup__image');
 const imageSubt = popupImg.querySelector('.popup__subtitle');
 
-const initialCards = [
+export const initialCards = [
   {
     name: 'Алтарь маски Жизни',
     link: './images/BIONICLE17.jpg'
@@ -48,8 +49,12 @@ const initialCards = [
   }
 ];
 
-function toggleThis(cont, clas) {
-  cont.classList.toggle(clas);
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 function createCard(data) {
@@ -61,9 +66,10 @@ function createCard(data) {
 
   titleElement.textContent = data.name;
   imageElement.src = data.link;
+  imageElement.alt = data.name;
 
   likeButton.addEventListener('click', () => {
-    toggleThis(likeButton, 'card__like_liked');
+    likeButton.classList.toggle('card__like_liked');
   });
   deleteButton.addEventListener('click', () => {
     cardElement.remove();
@@ -71,52 +77,54 @@ function createCard(data) {
   imageElement.addEventListener('click', () => {
     imageSubt.textContent = data.name;
     bigImage.src = data.link;
-    toggleThis(popupImg, 'popup_opened')
+    bigImage.alt = data.name;
+    openPopup(popupImg);
   })
 
-  placesElement.prepend(cardElement);
+  return cardElement;
+}
+
+function renderCard(card) {
+  placesElement.prepend(createCard(card));
 }
 
 editButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  toggleThis(popupProf, 'popup_opened');
+  openPopup(popupProf);
 });
 
 closePP.addEventListener('click', () => {
-  toggleThis(popupProf, 'popup_opened');
+  closePopup(popupProf);
 });
 
 popupProf.addEventListener('submit', (e) => {
   e.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  toggleThis(popupProf, 'popup_opened');
+  closePopup(popupProf);
 });
 
 addButton.addEventListener('click', () => {
-  toggleThis(popupCard, 'popup_opened');
+  cardForm.reset();
+  openPopup(popupCard);
 });
 
 closePC.addEventListener('click', () => {
-  toggleThis(popupCard, 'popup_opened');
+  closePopup(popupCard);
 });
 
 popupCard.addEventListener('submit', (e) => {
   e.preventDefault();
-  const data = {name: `${placeInput.value}`, link: `${linkInput.value}`};
-  createCard(data);
-  toggleThis(popupCard, 'popup_opened');
-  placeInput.value = '';
-  linkInput.value = '';
-})
-
-initialCards.forEach((item)  => {
-  createCard(item);
+  const data = {name: placeInput.value, link: linkInput.value};
+  renderCard(data);
+  closePopup(popupCard);
 })
 
 closePI.addEventListener('click', () => {
-  bigImage.src = '';
-  imageSubt.textContent = '';
-  toggleThis(popupImg, 'popup_opened');
+  closePopup(popupImg);
 });
+
+initialCards.forEach((item)  => {
+  renderCard(item);
+})
