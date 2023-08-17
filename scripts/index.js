@@ -1,3 +1,5 @@
+import {initialCards} from './cards.js'
+
 const profile = document.querySelector('.profile');
 const placesElement = document.querySelector('.elements');
 const templateElement = document.querySelector('#card-template').content.querySelector('.card');
@@ -6,9 +8,9 @@ const popupProf = document.querySelector('.popup_type_profile');
 const closePP = popupProf.querySelector('.popup__close');
 const editButton = profile.querySelector('.profile__edit');
 const profileName = profile.querySelector('.profile__name');
-const profileJob = profile.querySelector('.profile__job');
+const profileAbout = profile.querySelector('.profile__about');
 const nameInput = popupProf.querySelector('.popup__input_type_name');
-const jobInput = popupProf.querySelector('.popup__input_type_job');
+const aboutInput = popupProf.querySelector('.popup__input_type_about');
 
 const popupCard = document.querySelector('.popup_type_card');
 const closePC = popupCard.querySelector('.popup__close');
@@ -21,33 +23,6 @@ const popupImg = document.querySelector('.popup_type_image');
 const closePI = popupImg.querySelector('.popup__close');
 const bigImage = popupImg.querySelector('.popup__image');
 const imageSubt = popupImg.querySelector('.popup__subtitle');
-
-export const initialCards = [
-  {
-    name: 'Алтарь маски Жизни',
-    link: './images/BIONICLE17.jpg'
-  },
-  {
-    name: 'Храм маски Жизни',
-    link: './images/BIONICLE07.jpg'
-  },
-  {
-    name: 'Хранилище Вируса',
-    link: './images/BIONICLE18.jpg'
-  },
-  {
-    name: 'Лавовый резервуар',
-    link: './images/BIONICLE05.jpg'
-  },
-  {
-    name: 'Озеро протодермиса',
-    link: './images/BIONICLE03.jpg'
-  },
-  {
-    name: 'Воя Нуи',
-    link: './images/BIONICLE08.jpg'
-  }
-];
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -90,7 +65,7 @@ function renderCard(card) {
 
 editButton.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  aboutInput.value = profileAbout.textContent;
   openPopup(popupProf);
 });
 
@@ -98,10 +73,10 @@ closePP.addEventListener('click', () => {
   closePopup(popupProf);
 });
 
-popupProf.addEventListener('submit', (e) => {
-  e.preventDefault();
+popupProf.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileAbout.textContent = aboutInput.value;
   closePopup(popupProf);
 });
 
@@ -114,8 +89,8 @@ closePC.addEventListener('click', () => {
   closePopup(popupCard);
 });
 
-popupCard.addEventListener('submit', (e) => {
-  e.preventDefault();
+popupCard.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   const data = {name: placeInput.value, link: linkInput.value};
   renderCard(data);
   closePopup(popupCard);
