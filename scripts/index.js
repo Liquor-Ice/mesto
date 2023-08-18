@@ -23,21 +23,21 @@ const popupImg = document.querySelector('.popup_type_image');
 const bigImage = popupImg.querySelector('.popup__image');
 const imageSubt = popupImg.querySelector('.popup__subtitle');
 
-function escClose(evt, popupElement) {
+function escClose(evt) {
   if (evt.key === 'Escape') {
-    closePopup(popupElement);
+    closePopup(document.querySelector('.popup_opened'));
   };
   console.log(evt.key);
 };
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-  window.addEventListener('keydown', escClose(popupElement));
+  window.addEventListener('keydown', escClose);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
-  window.removeEventListener('keydown', escClose(popupElement));
+  window.removeEventListener('keydown', escClose);
 }
 
 function createCard(data) {
