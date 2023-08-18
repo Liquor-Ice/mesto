@@ -23,13 +23,21 @@ const checkInputValidity = (formElement, inputElement) => {
 };
 
 //функция валидации кнопки проверяет, есть ли в форме невалидные поля и либо отключает кнопку, либо включает
+const enableButton = (buttonElement) => {
+  buttonElement.removeAttribute('disabled');
+  buttonElement.classList.remove('popup__button_disabled');
+};
+
+export const disabledButton = (buttonElement) => {
+  buttonElement.setAttribute('disabled', true);
+  buttonElement.classList.add('popup__button_disabled');
+};
+
 const toggleButtonState = (formElement, buttonElement) => {
   if (formElement.checkValidity()) {
-    buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove('popup__button_disabled');
+    enableButton(buttonElement);
   } else {
-    buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add('popup__button_disabled');
+    disabledButton(buttonElement);
   };
 };
 
