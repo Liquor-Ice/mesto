@@ -1,5 +1,6 @@
 import {initialCards} from './cards.js';
 import {disabledButton} from './validate.js';
+import { configuration } from './validate.js';
 
 const profile = document.querySelector('.profile');
 const placesElement = document.querySelector('.elements');
@@ -11,6 +12,7 @@ const profileName = profile.querySelector('.profile__name');
 const profileAbout = profile.querySelector('.profile__about');
 const nameInput = popupProf.querySelector('.popup__input_type_name');
 const aboutInput = popupProf.querySelector('.popup__input_type_about');
+const profileForm = popupProf.querySelector('.popup__form');
 
 const popupCard = document.querySelector('.popup_type_card');
 const addButton = profile.querySelector('.profile__add-button');
@@ -72,6 +74,7 @@ function renderCard(card) {
 }
 
 editButton.addEventListener('click', () => {
+  profileForm.reset();
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
   openPopup(popupProf);
@@ -94,7 +97,7 @@ popupCard.addEventListener('submit', (evt) => {
   const data = {name: placeInput.value, link: linkInput.value};
   renderCard(data);
   closePopup(popupCard);
-  disabledButton(cardSubmit);
+  disabledButton(cardSubmit, configuration);
 })
 
 initialCards.forEach((item)  => {
