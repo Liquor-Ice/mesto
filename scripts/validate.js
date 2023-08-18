@@ -2,14 +2,14 @@
 const hideInputError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   //inputElement.classList.remove('.popup__input_type_error');
-  errorElement.classList.remove('popup__input-error_active');
+  inputElement.classList.remove('popup__input_type_error');
   errorElement.textContent = '';
 };
 //функция проявления ошибки
 const showInputError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   //inputElement.classList.add('.popup__input_type_error');
-  errorElement.classList.add('popup__input-error_active');
+  inputElement.classList.add('popup__input_type_error');
   errorElement.textContent = inputElement.validationMessage;
 };
 
@@ -26,10 +26,10 @@ const checkInputValidity = (formElement, inputElement) => {
 const toggleButtonState = (formElement, buttonElement) => {
   if (formElement.checkValidity()) {
     buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove('popup__buttone_disabled');
+    buttonElement.classList.remove('popup__button_disabled');
   } else {
     buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add('popup__buttone_disabled');
+    buttonElement.classList.add('popup__button_disabled');
   };
 };
 
@@ -57,6 +57,7 @@ const enableVaidation = () => {
     formElement.addEventListener('submit', evt => {
       evt.preventDefault();
     });
+    formElement.setAttribute('novalidate', true);
     setInputListeners(formElement);
   });
 };
