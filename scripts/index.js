@@ -1,10 +1,11 @@
+import {Card} from './card.js';
+import {closePopup, openPopup} from './utils.js';
 import {initialCards} from './cards.js';
 import {disabledButton} from './validate.js';
 import { configuration } from './validate.js';
 
 const profile = document.querySelector('.profile');
 const placesElement = document.querySelector('.elements');
-const templateElement = document.querySelector('#card-template').content.querySelector('.card');
 
 const popupProf = document.querySelector('.popup_type_profile');
 const editButton = profile.querySelector('.profile__edit');
@@ -21,56 +22,9 @@ const linkInput = popupCard.querySelector('.popup__input_type_link');
 const cardForm = popupCard.querySelector('.popup__form');
 const cardSubmit = cardForm.querySelector('.popup__button');
 
-const popupImg = document.querySelector('.popup_type_image');
-const bigImage = popupImg.querySelector('.popup__image');
-const imageSubt = popupImg.querySelector('.popup__subtitle');
-
-function escClose(evt) {
-  if (evt.key === 'Escape') {
-    closePopup(document.querySelector('.popup_opened'));
-  };
-  console.log(evt.key);
-};
-
-function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened');
-  window.addEventListener('keydown', escClose);
-}
-
-function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
-  window.removeEventListener('keydown', escClose);
-}
-
-function createCard(data) {
-  const cardElement = templateElement.cloneNode(true);
-  const titleElement = cardElement.querySelector('.card__title');
-  const imageElement = cardElement.querySelector('.card__image');
-  const likeButton = cardElement.querySelector('.card__like');
-  const deleteButton = cardElement.querySelector('.card__delete');
-
-  titleElement.textContent = data.name;
-  imageElement.src = data.link;
-  imageElement.alt = data.name;
-
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('card__like_liked');
-  });
-  deleteButton.addEventListener('click', () => {
-    cardElement.remove();
-  });
-  imageElement.addEventListener('click', () => {
-    imageSubt.textContent = data.name;
-    bigImage.src = data.link;
-    bigImage.alt = data.name;
-    openPopup(popupImg);
-  })
-
-  return cardElement;
-}
-
-function renderCard(card) {
-  placesElement.prepend(createCard(card));
+function renderCard(text, link) {
+  const card = new Card (text, link, '#card-template');
+  placesElement.prepend(card.generate());
 }
 
 editButton.addEventListener('click', () => {
@@ -94,14 +48,13 @@ addButton.addEventListener('click', () => {
 
 popupCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const data = {name: placeInput.value, link: linkInput.value};
-  renderCard(data);
+  renderCard(placeInput.value, linkInput.value);
   closePopup(popupCard);
   disabledButton(cardSubmit, configuration);
 })
 
 initialCards.forEach((item)  => {
-  renderCard(item);
+  renderCard(item.name, item.link);
 })
 
 const setCloseListeners = () => {
