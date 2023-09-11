@@ -1,8 +1,15 @@
 import {Card} from './card.js';
 import {closePopup, openPopup} from './utils.js';
 import {initialCards} from './cards.js';
-import {disabledButton} from './validate.js';
-import { configuration } from './validate.js';
+import {FormValidator} from './validate.js';
+
+const configuration = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+};
 
 const profile = document.querySelector('.profile');
 const placesElement = document.querySelector('.elements');
@@ -46,6 +53,11 @@ addButton.addEventListener('click', () => {
   openPopup(popupCard);
 });
 
+const disabledButton = (buttonElement, config) => {
+  buttonElement.setAttribute('disabled', true);
+  buttonElement.classList.add(config.inactiveButtonClass);
+};
+
 popupCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderCard(placeInput.value, linkInput.value);
@@ -53,9 +65,13 @@ popupCard.addEventListener('submit', (evt) => {
   disabledButton(cardSubmit, configuration);
 })
 
-initialCards.forEach((item)  => {
-  renderCard(item.name, item.link);
-})
+const enableVaidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach(formElement => {
+    const validator = new FormValidator(config, formElement);
+    validator.setInputListeners();
+  });
+}
 
 const setCloseListeners = () => {
   //найти все попапы
@@ -76,4 +92,10 @@ const setCloseListeners = () => {
   });
 };
 
-setCloseListeners();
+initialCards.forEach((item)  => {
+  renderCard(item.name, item.link);
+})
+
+enableVaidation(configuration)
+
+setCloseListeners()
