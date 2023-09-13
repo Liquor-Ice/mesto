@@ -18,4 +18,13 @@ function openPopup(popupElement) {
   window.addEventListener('keydown', escClose);
 }
 
-export {popupImg, bigImage, imageSubt, openPopup, closePopup, escClose}
+function openBigImage() {
+  if (event.target.classList.contains('card__image')) {
+    imageSubt.textContent = event.target.alt;
+    bigImage.src = event.target.src;
+    bigImage.alt = event.target.alt;
+    openPopup(popupImg);
+  }
+}
+
+export {popupImg, bigImage, imageSubt, openPopup, closePopup, escClose, openBigImage}

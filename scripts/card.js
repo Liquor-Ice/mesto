@@ -1,5 +1,3 @@
-import {popupImg, bigImage, imageSubt, openPopup} from './utils.js';
-
 export class Card {
   constructor (text, link, template) {
     this._templateSelector = template;
@@ -9,9 +7,7 @@ export class Card {
 
   //создаём элемент карточки в разметке
   _create() {
-    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
-
-    return cardElement;
+    return document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
   };
 
   //добавляем слушатели событий
@@ -24,13 +20,6 @@ export class Card {
     this._element.querySelector('.card__delete').addEventListener('click', () => {
       this._element.remove();
     });
-    //добавляем слушатель нажатия на картинку
-    this._element.querySelector('.card__image').addEventListener('click', () => {
-      imageSubt.textContent = this._text;
-      bigImage.src = this._link;
-      bigImage.alt = this._text;
-      openPopup(popupImg);
-    })
   };
 
   //генерируем готовую карточку
