@@ -31,20 +31,23 @@ const popupImg = document.querySelector('.popup_type_image');
 const bigImage = popupImg.querySelector('.popup__image');
 const imageSubt = popupImg.querySelector('.popup__subtitle');
 
+let openedPopup;
+
 function escClose(evt) {
   if (evt.key === 'Escape') {
-    closePopup();
+    closePopup(openedPopup);
   };
 };
 
-function closePopup() {
-  document.querySelector('.popup_opened').classList.remove('popup_opened');
+function closePopup(popupElement) {
+  popupElement.classList.remove('popup_opened');
   window.removeEventListener('keydown', escClose);
 }
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   window.addEventListener('keydown', escClose);
+  openedPopup = popupElement;
 }
 
 function openBigImage(evt) {
@@ -62,7 +65,7 @@ function renderCard(text, link) {
 }
 
 function openProfileEditor() {
-  popupProf.querySelector('.popup__form').reset();
+  profileForm.reset();
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
   openPopup(popupProf);
@@ -72,13 +75,13 @@ function submitProfileChange(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  closePopup();
+  closePopup(popupProf);
 }
 
 function submitNewCard(evt) {
   evt.preventDefault();
   renderCard(placeInput.value, linkInput.value);
-  closePopup();
+  closePopup(popupCard);
 }
 
 editButton.addEventListener('click', openProfileEditor);
@@ -86,7 +89,7 @@ editButton.addEventListener('click', openProfileEditor);
 popupProf.addEventListener('submit', submitProfileChange);
 
 addButton.addEventListener('click', () => {
-  popupCard.querySelector('.popup__form').reset();
+  cardForm.reset();
   openPopup(popupCard);
 });
 
@@ -103,7 +106,7 @@ const enableVaidation = (config) => {
 document.addEventListener('mouseup', (event) => {
   const targetClassList = event.target.classList;
   if (targetClassList.contains('popup') || targetClassList.contains('popup__close')) {
-    closePopup();
+    closePopup(openedPopup);
   };
 });
 

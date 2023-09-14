@@ -55,7 +55,6 @@ export class FormValidator {
         this._hideInputError(inputElement);
       });
     });
-    this._formElement.setAttribute('novalidate', true);
     this._toggleButtonState();
     inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
