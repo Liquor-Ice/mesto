@@ -1,4 +1,4 @@
-export class Card {
+export default class Card {
   constructor (text, link, template) {
     this._templateSelector = template;
     this._text = text;
