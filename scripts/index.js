@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import {initialCards} from './cards.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 const configuration = {
   formSelector: '.popup__form',
@@ -11,7 +12,7 @@ const configuration = {
 };
 
 const profile = document.querySelector('.profile');
-const placesElement = document.querySelector('.elements');
+const placesElement = document.querySelector('.elements');//
 
 const popupProf = document.querySelector('.popup_type_profile');
 const editButton = profile.querySelector('.profile__edit');
@@ -31,26 +32,26 @@ const popupImg = document.querySelector('.popup_type_image');
 const bigImage = popupImg.querySelector('.popup__image');
 const imageSubt = popupImg.querySelector('.popup__subtitle');
 
-let openedPopup;
+let openedPopup;//
 
-function escClose(evt) {
+function escClose(evt) {//
   if (evt.key === 'Escape') {
     closePopup(openedPopup);
   };
 };
 
-function closePopup(popupElement) {
+function closePopup(popupElement) {//
   popupElement.classList.remove('popup_opened');
   window.removeEventListener('keydown', escClose);
 }
 
-function openPopup(popupElement) {
+function openPopup(popupElement) {//
   popupElement.classList.add('popup_opened');
   window.addEventListener('keydown', escClose);
   openedPopup = popupElement;
 }
 
-function openBigImage(evt) {
+function openBigImage(evt) {//
   if (evt.target.classList.contains('card__image')) {
     imageSubt.textContent = evt.target.alt;
     bigImage.src = evt.target.src;
@@ -59,7 +60,7 @@ function openBigImage(evt) {
   }
 }
 
-function renderCard(text, link) {
+function renderCard(text, link) {//
   const card = new Card (text, link, '#card-template');
   placesElement.prepend(card.generate());
 }
@@ -103,14 +104,14 @@ const enableVaidation = (config) => {
   });
 }
 
-document.addEventListener('mouseup', (event) => {
+document.addEventListener('mouseup', (event) => {//
   const targetClassList = event.target.classList;
   if (targetClassList.contains('popup') || targetClassList.contains('popup__close')) {
     closePopup(openedPopup);
   };
 });
 
-initialCards.forEach((item)  => {
+initialCards.forEach((item)  => {//
   renderCard(item.name, item.link);
 })
 
