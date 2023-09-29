@@ -1,4 +1,4 @@
-export const initialCards = [
+export default [
   {
     name: 'Алтарь маски Жизни',
     link: './images/BIONICLE17.jpg'

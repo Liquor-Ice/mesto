@@ -1,8 +1,9 @@
 export default class Card {
-  constructor (text, link, template) {
+  constructor ({data, handleCardClick}, template) {
     this._templateSelector = template;
-    this._text = text;
-    this._link = link;
+    this._text = data.name;
+    this._link = data.link;
+    this._handleCardClick = handleCardClick;
   };
 
   //создаём элемент карточки в разметке
@@ -19,6 +20,10 @@ export default class Card {
     //добавляем слушатель удаления
     this._element.querySelector('.card__delete').addEventListener('click', () => {
       this._element.remove();
+    });
+    //добавляем слушатель нажатия на картинку
+    this._element.querySelector('.card__image').addEventListener('click', (evt) => {
+      this._handleCardClick(evt);
     });
   };
 
