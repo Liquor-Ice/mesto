@@ -72,14 +72,14 @@ function openProfileEditor() {
   openPopup(popupProf);
 }
 
-function submitProfileChange(evt) {
+function submitProfileChange(evt) {//--
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
   closePopup(popupProf);
 }
 
-function submitNewCard(evt) {
+function submitNewCard(evt) {//--
   evt.preventDefault();
   renderCard(placeInput.value, linkInput.value);
   closePopup(popupCard);
@@ -87,14 +87,14 @@ function submitNewCard(evt) {
 
 editButton.addEventListener('click', openProfileEditor);
 
-popupProf.addEventListener('submit', submitProfileChange);
+popupProf.addEventListener('submit', submitProfileChange);//
 
 addButton.addEventListener('click', () => {
-  cardForm.reset();
+  cardForm.reset();//
   openPopup(popupCard);
 });
 
-popupCard.addEventListener('submit', submitNewCard)
+popupCard.addEventListener('submit', submitNewCard)//
 
 const enableVaidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
