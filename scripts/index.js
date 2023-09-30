@@ -17,6 +17,8 @@ const configuration = {
 const profile = document.querySelector('.profile');
 const editButton = profile.querySelector('.profile__edit');
 const addButton = profile.querySelector('.profile__add-button');
+const nameInput = document.querySelector('#name-input');
+const aboutInput = document.querySelector('#about-input');
 
 const profileInfo = new UserInfo({
   nameSelector: '.profile__name', 
@@ -67,6 +69,9 @@ cardList.renderItems();
 vaidateForms(configuration);
 
 editButton.addEventListener('click', () => {
+  const userInfo = profileInfo.getUserInfo();
+  nameInput.value = userInfo.userName;
+  aboutInput.value = userInfo.userAbout;
   popupProfileForm.open()
 });
 addButton.addEventListener('click', () => {popupCardForm.open()});
