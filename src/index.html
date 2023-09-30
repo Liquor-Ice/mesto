@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
@@ -13,7 +12,7 @@
   </header>
   <main class="content page__container">
     <section class="profile">
-      <img src="./images/portrait.jpg" alt="аватарка" class="profile__avatar">
+      <img src="<%=require('./images/portrait.jpg')%>" alt="аватарка" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__name page__overflow">Северин Бакле</h1>
@@ -75,6 +74,5 @@
       </div>
     </article>
   </template>
-  <script src="./scripts/index.js" type="module"></script>
 </body>
 </html>

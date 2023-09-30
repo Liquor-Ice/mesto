@@ -1,3 +1,4 @@
+import '../pages/index.css'
 import Card from './Card.js';
 import initialCards from './cards.js';
 import FormValidator from './FormValidator.js';
@@ -26,13 +27,13 @@ const profileInfo = new UserInfo({
 });
 
 const popupProfileForm = new PopupWithForm('.popup_type_profile', {
-  submiter: (data) => {
+  submiter: data => {
     profileInfo.setUserInfo(data);
   }
 });
 
 const popupCardForm = new PopupWithForm('.popup_type_card', {
-  submiter: (data) => {
+  submiter: data => {
     cardList.renderer(data);
   }
 });
@@ -44,7 +45,7 @@ const cardList = new Section({
   renderer: item => {
     const card = new Card({
       data: item, 
-      handleCardClick: (evt) => {
+      handleCardClick: evt => {
         popupWithImage.open(evt)
       }
     }, '#card-template');
@@ -53,7 +54,7 @@ const cardList = new Section({
   }
 }, '.elements')
 
-const vaidateForms = (config) => {
+const vaidateForms = config => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach(formElement => {
     const validator = new FormValidator(config, formElement);
