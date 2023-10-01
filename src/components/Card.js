@@ -14,27 +14,29 @@ export default class Card {
   //добавляем слушатели событий
   _setEventListeners() {
     //добавляем слушатель лайка
-    this._element.querySelector('.card__like').addEventListener('click', () => {
-      this._element.querySelector('.card__like').classList.toggle('card__like_liked');
+    this._like.addEventListener('click', () => {
+      this._like.classList.toggle('card__like_liked');
     });
     //добавляем слушатель удаления
     this._element.querySelector('.card__delete').addEventListener('click', () => {
       this._element.remove();
     });
     //добавляем слушатель нажатия на картинку
-    this._element.querySelector('.card__image').addEventListener('click', (evt) => {
-      this._handleCardClick(evt);
+    this._image.addEventListener('click', () => {
+      this._handleCardClick(this._text, this._link);
     });
   };
 
   //генерируем готовую карточку
   generate() {
     this._element = this._create();
+    this._like = this._element.querySelector('.card__like');
+    this._image = this._element.querySelector('.card__image');
     this._setEventListeners();
 
     this._element.querySelector('.card__title').textContent = this._text;
-    this._element.querySelector('.card__image').src = this._link;
-    this._element.querySelector('.card__image').alt = this._text;
+    this._image.src = this._link;
+    this._image.alt = this._text;
 
     return this._element;
   };

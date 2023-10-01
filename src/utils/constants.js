@@ -5,7 +5,15 @@ import imgLink4 from '../images/BIONICLE05.jpg';
 import imgLink5 from '../images/BIONICLE03.jpg';
 import imgLink6 from '../images/BIONICLE08.jpg';
 
-export default [
+const configuration = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error'
+};
+
+const initialCards = [
   {
     name: 'Алтарь маски Жизни',
     link: imgLink1
@@ -31,3 +39,5 @@ export default [
     link: imgLink6
   }
 ];
+
+export {configuration, initialCards};

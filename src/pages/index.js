@@ -1,19 +1,11 @@
-import '../pages/index.css'
-import Card from './Card.js';
-import initialCards from './cards.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
-import UserInfo from './UserInfo.js';
-
-const configuration = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error'
-};
+import './index.css';
+import {configuration, initialCards} from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 const profile = document.querySelector('.profile');
 const editButton = profile.querySelector('.profile__edit');
@@ -45,8 +37,8 @@ const cardList = new Section({
   renderer: item => {
     const card = new Card({
       data: item, 
-      handleCardClick: evt => {
-        popupWithImage.open(evt)
+      handleCardClick: (text, link) => {
+        popupWithImage.open(text, link)
       }
     }, '#card-template');
     const cardElement = card.generate();
