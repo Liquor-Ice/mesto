@@ -6,6 +6,6 @@
 
 **Ссылка**
 
-* [Ссылка на проект в GitHub Pages](https://liquor-ice.github.io/mesto/)
+* [Ссылка на проект в GitHub Pages](https://liquor-ice.github.io/mesto/index.html)
 
 Спасибо!
