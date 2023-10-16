@@ -3,6 +3,7 @@ export default class Card {
     this._templateSelector = template;
     this._text = data.name;
     this._link = data.link;
+    this._likes = data.likes.length;
     this._handleCardClick = handleCardClick;
   };
 
@@ -37,6 +38,7 @@ export default class Card {
     this._element.querySelector('.card__title').textContent = this._text;
     this._image.src = this._link;
     this._image.alt = this._text;
+    this._element.querySelector('.card__like-counter').textContent = this._likes;
 
     return this._element;
   };

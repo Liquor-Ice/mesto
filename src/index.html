@@ -15,10 +15,10 @@
       <img src="<%=require('./images/portrait.jpg')%>" alt="аватарка" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__container">
-          <h1 class="profile__name page__overflow">Северин Бакле</h1>
+          <h1 class="profile__name page__overflow"></h1>
           <button class="profile__edit page__button" type="button" aria-label="редактировать профиль"></button>
         </div>
-        <p class="profile__about page__overflow">Картограф виртуальных миров, концепт-художник</p>
+        <p class="profile__about page__overflow"></p>
       </div>
       <button class="profile__add-button page__button" type="button" aria-label="добавить место"></button>
     </section>
@@ -63,6 +63,13 @@
       <h2 class="popup__subtitle"></h2>
     </div>
   </div>
+  <div class="popup popup_type_delete">
+    <div class="popup__container">
+      <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button class="popup__button popup__button_disabled page__button" type="submit" aria-label="удалить карточку" disabled>Да</button>
+    </div>
+  </div>
 
   <template id="card-template">
     <article class="card">
@@ -70,7 +77,10 @@
       <button class="card__delete page__button" type="button" aria-label="удалить карточку"></button>
       <div class="card__description">
         <h2 class="card__title page__overflow"></h2>
-        <button class="card__like page__button" type="button" aria-label="нравится"></button>
+        <div class="card__like-group">
+          <button class="card__like page__button" type="button" aria-label="нравится"></button>
+          <p class="card__like-counter">0</p>
+        </div>
       </div>
     </article>
   </template>
