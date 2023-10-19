@@ -4,6 +4,7 @@ import Api from '../components/Api.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
@@ -16,6 +17,15 @@ const editButton = profile.querySelector('.profile__edit');
 const addButton = profile.querySelector('.profile__add-button');
 const nameInput = document.querySelector('#name-input');
 const aboutInput = document.querySelector('#about-input');
+
+let userId;
+let cardToBeDeleted;
+const checkLikeStatus = (card) => {
+  const res = card.likes.find(likeItem => {
+    return likeItem._id === userId
+  })
+  return res
+}
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-77',
@@ -33,7 +43,9 @@ const profileInfo = new UserInfo({
 
 api.getUserInfo()
   .then(info => {
-    profileInfo.setUserInfo({name: info.name, about: info.about})
+    profileInfo.setUserInfo({name: info.name, about: info.about});
+    profileInfo.setAvatar({avatar: info.avatar});
+    userId = info._id;
   })
   .catch(error => {
     console.log('getUserInfo error', error)
@@ -50,6 +62,7 @@ const popupProfileForm = new PopupWithForm('.popup_type_profile', {
       })
   }
 });
+popupProfileForm.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card', {
   submiter: data => {
@@ -62,8 +75,36 @@ const popupCardForm = new PopupWithForm('.popup_type_card', {
       })
   }
 });
+popupCardForm.setEventListeners();
+
+const popupAvatarForm = new PopupWithForm('.popup_type_avatarChange', {
+  submiter: data => {
+    api.changeAvatar({avatar: data.avatar})
+      .then(item => {
+        console.log(item)
+      })
+      .catch(error => {
+        console.log('changeAvatar error', error)
+      })
+  }
+})
 
 const popupWithImage = new PopupWithImage('.popup_type_image');
+popupWithImage.setEventListeners();
+
+const popupDeleteConfirm = new Popup('.popup_type_confirm');
+popupDeleteConfirm.setEventListeners();
+popupDeleteConfirm.popup.querySelector('.popup__button').addEventListener('click', () => {
+  api.deleteCard(cardToBeDeleted.id)
+    .then(() => {
+      cardToBeDeleted.element.remove();
+      popupDeleteConfirm.close();
+    })
+    .catch(error => {
+      console.log('deleteCard error', error)
+    })
+});
+
 
 const cardList = new Section({
   renderer: item => {
@@ -71,9 +112,40 @@ const cardList = new Section({
       data: item, 
       handleCardClick: (text, link) => {
         popupWithImage.open(text, link)
-      } 
+      },
+      handleDelClick: () => {
+        cardToBeDeleted = card;
+        popupDeleteConfirm.open();
+      },
+      handleLikeClick: () => {
+        if(checkLikeStatus(card) === undefined) {
+          api.likeCard(card.id)
+            .then(cardItem => {
+              card.like.classList.add('card__like_liked');
+              card.setLikeCounter(cardItem.likes);
+            })
+            .catch(error => {
+              console.log('likeCard error', error)
+            })
+        } else {
+          api.unlikeCard(card.id)
+            .then(cardItem => {
+              card.like.classList.remove('card__like_liked');
+              card.setLikeCounter(cardItem.likes);
+            })
+            .catch(error => {
+              console.log('unlikeCard error', error)
+            })
+        }
+      }
     }, '#card-template');
     const cardElement = card.generate();
+    if (!(card.ownerId === userId)) {
+      cardElement.querySelector('.card__delete').remove()
+    }
+    if(checkLikeStatus(card) !== undefined) {
+      card.like.classList.add('card__like_liked');
+    }
     cardList.addItem(cardElement)
   }
 }, '.elements')
@@ -86,9 +158,6 @@ const vaidateForms = config => {
   });
 };
 
-popupProfileForm.setEventListeners();
-popupCardForm.setEventListeners();
-popupWithImage.setEventListeners();
 
 api.getInitialCards()
   .then(cards => {
@@ -106,14 +175,3 @@ editButton.addEventListener('click', () => {
   popupProfileForm.open()
 });
 addButton.addEventListener('click', () => {popupCardForm.open()});
-
-// fetch('https://mesto.nomoreparties.co/v1/cohort-77/cards', {
-//   method: 'GET',
-//   headers: {
-//     authorization: 'fc86c855-ca05-4f2c-87da-a37a1fb394c0'
-//   }
-// })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });

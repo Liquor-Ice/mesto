@@ -57,14 +57,41 @@ export default class Api {
   }
 
   // /cards/*cardID*
-  deleteCard() {}
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
+      headers: this._headers,
+      method: 'DELETE'
+    })
+    .then((response) => onError(response))
+  }
 
-  // /cards/*cardID*
-  likeCard() {}
+  // /cards/*cardID*/likes
+  likeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      headers: this._headers,
+      method: 'PUT'
+    })
+    .then((response) => onError(response))
+  }
 
-  // /cards/*cardID*
-  unlikeCard() {}
+  // /cards/*cardID*/likes
+  unlikeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      headers: this._headers,
+      method: 'DELETE'
+    })
+    .then((response) => onError(response))
+  }
 
   // /users/me/avatar
-  changeAvatar() {}
+  changeAvatar({avatar}) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+    .then((response) => onError(response))
+  }
 }

@@ -12,7 +12,7 @@
   </header>
   <main class="content page__container">
     <section class="profile">
-      <img src="<%=require('./images/portrait.jpg')%>" alt="аватарка" class="profile__avatar">
+      <img src="#" alt="аватарка" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__name page__overflow"></h1>
@@ -63,11 +63,22 @@
       <h2 class="popup__subtitle"></h2>
     </div>
   </div>
-  <div class="popup popup_type_delete">
+  <div class="popup popup_type_avatarChange" aria-label="Обновить аватар">
+    <div class="popup__container">
+      <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form action="#" class="popup__form" name="cardForm" method="post" novalidate>
+        <input id="avatar-input" class="popup__input popup__input_type_avatar" name="avatar" placeholder="Ссылка на картинку" type="url" required>
+        <span class="popup__input-error place-input-error"></span>
+        <button class="popup__button popup__button_disabled page__button" type="submit" aria-label="создать карточку" disabled>Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_confirm">
     <div class="popup__container">
       <button class="popup__close page__button" type="button" aria-label="закрыть форму"></button>
       <h2 class="popup__title">Вы уверены?</h2>
-      <button class="popup__button popup__button_disabled page__button" type="submit" aria-label="удалить карточку" disabled>Да</button>
+      <button class="popup__button page__button" type="button" aria-label="удалить карточку">Да</button>
     </div>
   </div>
 
