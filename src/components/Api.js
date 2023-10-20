@@ -1,15 +1,15 @@
-const onError = (response) => {
-  if (response.ok) {
-    return response.json();
-  } else {
-    return Promise.reject(`Ошибка ${response.status} ${response.statusText}`);
-  }
-}
-
 export default class Api {
   constructor({url, headers}) {
     this._url = url;
     this._headers = headers;
+  }
+
+  onError(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(`Ошибка ${response.status} ${response.statusText}`);
+    }
   }
 
   // /users/me
@@ -18,7 +18,7 @@ export default class Api {
       headers: this._headers,
       method: 'GET'
     })
-      .then((response) => onError(response))
+      .then((response) => this.onError(response))
   }
 
   // /users/me
@@ -31,7 +31,7 @@ export default class Api {
         about: about
       })
     })
-      .then((response) => onError(response))
+      .then((response) => this.onError(response))
   }
 
   // /cards
@@ -40,7 +40,7 @@ export default class Api {
       headers: this._headers,
       method: 'GET'
     })
-      .then((response) => onError(response))
+      .then((response) => this.onError(response))
   }
 
   // /cards
@@ -53,7 +53,7 @@ export default class Api {
         link: link
       })
     })
-    .then((response) => onError(response))
+    .then((response) => this.onError(response))
   }
 
   // /cards/*cardID*
@@ -62,7 +62,7 @@ export default class Api {
       headers: this._headers,
       method: 'DELETE'
     })
-    .then((response) => onError(response))
+    .then((response) => this.onError(response))
   }
 
   // /cards/*cardID*/likes
@@ -71,7 +71,7 @@ export default class Api {
       headers: this._headers,
       method: 'PUT'
     })
-    .then((response) => onError(response))
+    .then((response) => this.onError(response))
   }
 
   // /cards/*cardID*/likes
@@ -80,7 +80,7 @@ export default class Api {
       headers: this._headers,
       method: 'DELETE'
     })
-    .then((response) => onError(response))
+    .then((response) => this.onError(response))
   }
 
   // /users/me/avatar
@@ -92,6 +92,6 @@ export default class Api {
         avatar: avatar
       })
     })
-    .then((response) => onError(response))
+    .then((response) => this.onError(response))
   }
 }

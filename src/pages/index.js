@@ -4,7 +4,7 @@ import Api from '../components/Api.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
@@ -18,13 +18,6 @@ const aboutInput = document.querySelector('#about-input');
 const avatarInput = document.querySelector('#avatar-input');
 
 let userId;
-let cardToBeDeleted;
-const checkLikeStatus = card => {
-  const res = card.likes.find(likeItem => {
-    return likeItem._id === userId
-  })
-  return res
-}
 const submitLoading = (form, isLoading, message) => {
   if(isLoading) {
     form.button.textContent = 'Сохранение...'
@@ -47,22 +40,13 @@ const profileInfo = new UserInfo({
   avatarSelector: '.profile__avatar'
 });
 
-api.getUserInfo()
-  .then(info => {
-    profileInfo.setUserInfo({name: info.name, about: info.about});
-    profileInfo.setAvatar({avatar: info.avatar});
-    userId = info._id;
-  })
-  .catch(error => {
-    console.log('getUserInfo error', error)
-  });
-
 const popupProfileForm = new PopupWithForm('.popup_type_profile', {
   submiter: data => {
     submitLoading(popupProfileForm, true, 'Сохранить');
     api.setUserInfo({name: data.name, about: data.about})
       .then(info => {
-        profileInfo.setUserInfo({name: info.name, about: info.about})
+        profileInfo.setUserInfo({name: info.name, about: info.about});
+        popupProfileForm.close();
       })
       .catch(error => {
         console.log('setUserInfo error', error)
@@ -77,12 +61,13 @@ const popupCardForm = new PopupWithForm('.popup_type_card', {
     submitLoading(popupCardForm, true, 'Создать');
     api.addCard({name: data.name, link: data.link})
       .then(card => {
-        cardList.renderer(card)
+        cardList.renderer(card);
+        popupCardForm.close();
       })
       .catch(error => {
         console.log('addCard error', error)
       })
-      .finally(() => {submitLoading(popupCardForm, true, 'Создать');})
+      .finally(() => {submitLoading(popupCardForm, false, 'Создать');})
   }
 });
 popupCardForm.setEventListeners();
@@ -92,7 +77,8 @@ const popupAvatarForm = new PopupWithForm('.popup_type_avatarChange', {
     submitLoading(popupAvatarForm, true, 'Сохранить')
     api.changeAvatar({avatar: data.avatar})
       .then(info => {
-        profileInfo.setAvatar({avatar: info.avatar})
+        profileInfo.setAvatar({avatar: info.avatar});
+        popupAvatarForm.close();
       })
       .catch(error => {
         console.log('changeAvatar error', error)
@@ -105,19 +91,19 @@ popupAvatarForm.setEventListeners();
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
-const popupDeleteConfirm = new Popup('.popup_type_confirm');
-popupDeleteConfirm.setEventListeners();
-popupDeleteConfirm.popup.querySelector('.popup__button').addEventListener('click', () => {
-  api.deleteCard(cardToBeDeleted.id)
-    .then(() => {
-      cardToBeDeleted.element.remove();
-      popupDeleteConfirm.close();
-    })
-    .catch(error => {
-      console.log('deleteCard error', error)
-    })
+const popupDeleteConfirm = new PopupWithConfirmation('.popup_type_confirm', {
+  submiter: card => {
+    api.deleteCard(card.id)
+      .then(() => {
+        card.removeCard();
+        popupDeleteConfirm.close();
+      })
+      .catch(error => {
+        console.log('deleteCard error', error)
+      })
+  }
 });
-
+popupDeleteConfirm.setEventListeners();
 
 const cardList = new Section({
   renderer: item => {
@@ -127,15 +113,13 @@ const cardList = new Section({
         popupWithImage.open(text, link)
       },
       handleDelClick: () => {
-        cardToBeDeleted = card;
-        popupDeleteConfirm.open();
+        popupDeleteConfirm.open(card);
       },
       handleLikeClick: () => {
-        if(checkLikeStatus(card) === undefined) {
+        if(card.checkLikeStatus(userId) === undefined) {
           api.likeCard(card.id)
             .then(cardItem => {
-              card.like.classList.add('card__like_liked');
-              card.setLikeCounter(cardItem.likes);
+              card.setLike(cardItem);
             })
             .catch(error => {
               console.log('likeCard error', error)
@@ -143,8 +127,7 @@ const cardList = new Section({
         } else {
           api.unlikeCard(card.id)
             .then(cardItem => {
-              card.like.classList.remove('card__like_liked');
-              card.setLikeCounter(cardItem.likes);
+              card.setLike(cardItem);
             })
             .catch(error => {
               console.log('unlikeCard error', error)
@@ -154,10 +137,10 @@ const cardList = new Section({
     }, '#card-template');
     const cardElement = card.generate();
     if (!(card.ownerId === userId)) {
-      cardElement.querySelector('.card__delete').remove()
+      card.trashRemove();
     }
-    if(checkLikeStatus(card) !== undefined) {
-      card.like.classList.add('card__like_liked');
+    if(card.checkLikeStatus(userId) !== undefined) {
+      card.setLikeStatus();
     }
     cardList.addItem(cardElement)
   }
@@ -170,15 +153,6 @@ const vaidateForms = config => {
     validator.enableValidation();
   });
 };
-
-
-api.getInitialCards()
-  .then(cards => {
-    cardList.renderItems(cards)
-  })
-  .catch(error => {
-    console.log('getInitialCards error', error)
-  });
 vaidateForms(configuration);
 
 editButton.addEventListener('click', () => {
@@ -189,7 +163,16 @@ editButton.addEventListener('click', () => {
 });
 addButton.addEventListener('click', () => {popupCardForm.open()});
 avaButton.addEventListener('click', () => {
-  const userAv = profileInfo.getAvatar();
-  avatarInput.value = userAv.avatar;
   popupAvatarForm.open()
 });
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([info, cards]) => {
+    profileInfo.setUserInfo({name: info.name, about: info.about});
+    profileInfo.setAvatar({avatar: info.avatar});
+    userId = info._id;
+    cardList.renderItems(cards)
+  })
+  .catch(error => {
+    console.log('Error', error)
+  })

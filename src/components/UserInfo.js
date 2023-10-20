@@ -17,12 +17,6 @@ export default class UserInfo {
     this._about.textContent = about;
   };
 
-  getAvatar() {
-    return {
-      avatar: this._avatar.src
-    }
-  }
-
   setAvatar({avatar}) {
     this._avatar.src = avatar;
   }
