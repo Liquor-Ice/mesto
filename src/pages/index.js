@@ -15,16 +15,25 @@ import UserInfo from '../components/UserInfo.js';
 const profile = document.querySelector('.profile');
 const editButton = profile.querySelector('.profile__edit');
 const addButton = profile.querySelector('.profile__add-button');
+const avaButton = profile.querySelector('.profile__avatar-container')
 const nameInput = document.querySelector('#name-input');
 const aboutInput = document.querySelector('#about-input');
+const avatarInput = document.querySelector('#avatar-input');
 
 let userId;
 let cardToBeDeleted;
-const checkLikeStatus = (card) => {
+const checkLikeStatus = card => {
   const res = card.likes.find(likeItem => {
     return likeItem._id === userId
   })
   return res
+}
+const submitLoading = (form, isLoading, message) => {
+  if(isLoading) {
+    form.button.textContent = 'Сохранение...'
+  } else {
+    form.button.textContent = message
+  }
 }
 
 const api = new Api({
@@ -53,6 +62,7 @@ api.getUserInfo()
 
 const popupProfileForm = new PopupWithForm('.popup_type_profile', {
   submiter: data => {
+    submitLoading(popupProfileForm, true, 'Сохранить');
     api.setUserInfo({name: data.name, about: data.about})
       .then(info => {
         profileInfo.setUserInfo({name: info.name, about: info.about})
@@ -60,12 +70,14 @@ const popupProfileForm = new PopupWithForm('.popup_type_profile', {
       .catch(error => {
         console.log('setUserInfo error', error)
       })
+      .finally(() => {submitLoading(popupProfileForm, false, 'Сохранить')})
   }
 });
 popupProfileForm.setEventListeners();
 
 const popupCardForm = new PopupWithForm('.popup_type_card', {
   submiter: data => {
+    submitLoading(popupCardForm, true, 'Создать');
     api.addCard({name: data.name, link: data.link})
       .then(card => {
         cardList.renderer(card)
@@ -73,21 +85,25 @@ const popupCardForm = new PopupWithForm('.popup_type_card', {
       .catch(error => {
         console.log('addCard error', error)
       })
+      .finally(() => {submitLoading(popupCardForm, true, 'Создать');})
   }
 });
 popupCardForm.setEventListeners();
 
 const popupAvatarForm = new PopupWithForm('.popup_type_avatarChange', {
   submiter: data => {
+    submitLoading(popupAvatarForm, true, 'Сохранить')
     api.changeAvatar({avatar: data.avatar})
-      .then(item => {
-        console.log(item)
+      .then(info => {
+        profileInfo.setAvatar({avatar: info.avatar})
       })
       .catch(error => {
         console.log('changeAvatar error', error)
       })
+      .finally(() => {submitLoading(popupAvatarForm, false, 'Сохранить')})
   }
-})
+});
+popupAvatarForm.setEventListeners();
 
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
@@ -175,3 +191,8 @@ editButton.addEventListener('click', () => {
   popupProfileForm.open()
 });
 addButton.addEventListener('click', () => {popupCardForm.open()});
+avaButton.addEventListener('click', () => {
+  const userAv = profileInfo.getAvatar();
+  avatarInput.value = userAv.avatar;
+  popupAvatarForm.open()
+});
