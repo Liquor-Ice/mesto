@@ -9,9 +9,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 
-// Токен: fc86c855-ca05-4f2c-87da-a37a1fb394c0
-// Идентификатор группы: cohort-77"
-
 const profile = document.querySelector('.profile');
 const editButton = profile.querySelector('.profile__edit');
 const addButton = profile.querySelector('.profile__add-button');
